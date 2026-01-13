@@ -25,6 +25,7 @@ app.get('/api/employees', (req, res) => {
 // Endpoint that receives a string, waits 3 seconds, and returns it
 app.get('/api/employees/search', async (req, res) => {
   const term = req.query.q;
+  const delay = Math.random() * 3000;
 
   if (!term) {
     return res.status(400).json({ error: 'Term is required' });
@@ -32,7 +33,7 @@ app.get('/api/employees/search', async (req, res) => {
 
   // DO NOT CHANGE!
   const filteredList = employees.filter(emp => emp.name.toLowerCase().includes(term.toLowerCase()));
-  // await new Promise(resolve => setTimeout(resolve, 1000)); //simulate delay
+  await new Promise(resolve => setTimeout(() => resolve(), delay)); //simulate delay
 
   res.json({ employees: filteredList });
 });
