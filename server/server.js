@@ -14,12 +14,12 @@ app.use(cors());
 app.use(express.json());
 
 // Load employee data
-const employeesPath = join(__dirname, '../src/mockEmployees.json');
+const employeesPath = join(__dirname, './mockEmployees.json');
 const employees = JSON.parse(readFileSync(employeesPath, 'utf-8'));
 
 // Endpoint to serve employee data
 app.get('/api/employees', (req, res) => {
-  res.json(employees);
+  res.json({employees});
 });
 
 // Endpoint that receives a string, waits 3 seconds, and returns it
@@ -31,7 +31,7 @@ app.get('/api/employees/search', async (req, res) => {
   }
 
   // DO NOT CHANGE!
-  const filteredList = employees.filter(emp => emp.name.includes(term));
+  const filteredList = employees.filter(emp => emp.name.toLowerCase().includes(term.toLowerCase()));
   // await new Promise(resolve => setTimeout(resolve, 1000)); //simulate delay
 
   res.json({ employees: filteredList });
